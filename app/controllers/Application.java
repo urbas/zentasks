@@ -1,14 +1,18 @@
 package controllers;
 
-import play.*;
-import play.mvc.*;
+import play.mvc.Result;
+import si.urbas.pless.PlessController;
+import si.urbas.pless.authentication.routes;
+import views.html.index;
 
-import views.html.*;
+public class Application extends PlessController {
 
-public class Application extends Controller {
-
-    public static Result index() {
-        return ok(index.render("Your new application is ready."));
+  public static Result index() {
+    if (auth().isLoggedIn()) {
+      return ok(index.render());
+    } else {
+      return redirect(routes.AuthenticationController.status());
     }
+  }
 
 }
